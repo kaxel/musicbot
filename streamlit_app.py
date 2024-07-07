@@ -38,10 +38,10 @@ ques_genre_second = col2.radio(
     ,'blues'
     ,'folk'))
 
-current_sql = 'SELECT * from NEWSONGS where "' + ques_genre_main + '">0'
+current_sql = '"' + ques_genre_main + '">0'
 
 if ques_genre_second and len(ques_genre_second)>1:
-    current_sql += " AND CHARINDEX('" + ques_genre_second + "', NEWSONGS." + '"taginfo")>0 '
+    current_sql += " AND CHARINDEX('" + ques_genre_second + "', SONGS." + '"tags")>0 '
 
 current_sql += " order by RANDOM();"
 
@@ -65,10 +65,10 @@ st_supabase = st.connection(
 # Perform query.
 #rows = conn.query("*", table="mytable", ttl="10m").execute()
 # rows = st_supabase.query(current_sql, ttl="10m")
-rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=None)
+#rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=None)
 #execute_query()
 
-#execute_query(st_supabase.table("countries").select("*", count="None").eq("continent","Asia").order("name",desc=True).limit(5), ttl=None)
+rows = execute_query(st_supabase.table("songs").select("*", count="None").eq("tags", ques_genre_main).order("preview",desc=True).limit(1), ttl=None)
 
 
 queried_data = rows.data

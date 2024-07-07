@@ -71,15 +71,14 @@ rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=N
 #execute_query(st_supabase.table("countries").select("*", count="None").eq("continent","Asia").order("name",desc=True).limit(5), ttl=None)
 
 
-
-#queried_data = session.sql(current_sql).to_pandas()
 queried_data = rows
+#queried_data = session.sql(current_sql).to_pandas()
 
 #df = conn.query(current_sql, ttl=600)
 # # # Execute the query and convert it into a Pandas dataframe
 #queried_data = df.to_pandas()
 
-if not queried_data.shape[0] == 0:
+if not queried_data.count == 0:
     #title
     title = queried_data.iloc[0,0] 
     #image 

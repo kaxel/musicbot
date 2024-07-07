@@ -64,14 +64,14 @@ st_supabase = st.connection(
 
 # Perform query.
 #rows = conn.query("*", table="mytable", ttl="10m").execute()
-# rows = st_supabase. query(current_sql, ttl="10m")
+# rows = st_supabase.query(current_sql, ttl="10m")
 rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=None)
 #execute_query()
 
 #execute_query(st_supabase.table("countries").select("*", count="None").eq("continent","Asia").order("name",desc=True).limit(5), ttl=None)
 
 
-queried_data = rows
+queried_data = rows.data
 #queried_data = session.sql(current_sql).to_pandas()
 
 #df = conn.query(current_sql, ttl=600)
@@ -80,11 +80,11 @@ queried_data = rows
 
 if not queried_data.count == 0:
     #title
-    title = queried_data.iloc[0,0] 
+    title = queried_data[0]["name"]
     #image 
-    link = queried_data.iloc[0,10]
+    link = queried_data[0]["link"]
     #image 
-    image = queried_data.iloc[0,11]
+    image = queried_data[0]["pix"]
 else:
     title="no matches found."
     link=""

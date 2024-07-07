@@ -50,8 +50,8 @@ st_supabase = st.connection(
 current_sql = "testing"
 # Perform query.
 if len(ques_genre_second)>1:
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
-  current_sql = f"search {ques_genre_second}"
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
+  current_sql = f"search {ques_genre_second} & {ques_genre_main}"
 else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
   current_sql = f"search {ques_genre_main}"
@@ -61,7 +61,7 @@ current_sql
 queried_data = rows.data
 
 if len(queried_data)>0:
-    #title
+    #title√
     title = queried_data[0]["name"]
     #image 
     link = queried_data[0]["link"]

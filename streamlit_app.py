@@ -50,7 +50,7 @@ st_supabase = st.connection(
 
 # Perform query.
 if len(ques_genre_second)>1:
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
 else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)  
 

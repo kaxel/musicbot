@@ -73,7 +73,8 @@ else:
     link=""
     image=""
 
-name1 =  queried_data[0]["name"][:18]
+if queried_data[0]["name"]:
+  name1 =  queried_data[0]["name"][:18]
 
 if queried_data[1]["name"]:
   name2 =  queried_data[1]["name"][:18]
@@ -86,7 +87,8 @@ if queried_data[3]["name"]:
 
 tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
 
-with tab1:
+if name1:
+  with tab1:
    st.header(queried_data[0]["name"])
    subcola1, subcola2 = tab1.columns(2)
    subcola1.image(queried_data[0]["pix"], width=200)
@@ -94,6 +96,9 @@ with tab1:
     subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
    else:
     subcola2.video(queried_data[0]["link"])
+else:
+  with tab1:
+    st.header("no matches")
 
 if name2:
   with tab2:

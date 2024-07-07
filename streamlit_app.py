@@ -1,9 +1,7 @@
 # Import python packages
 import streamlit as st
 from st_supabase_connection import SupabaseConnection, execute_query
-import random
 
-#print(random.randint(3, 9))
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
 
@@ -20,7 +18,6 @@ ques_genre_main = col1.radio(
     ('indie-rock',
     'indie-pop',
     'folk-pop',
-    'roots',
     'americana',
     'soul',
     'electronic',
@@ -31,14 +28,13 @@ ques_genre_second = col2.radio(
     "Secondary genre.",
     ('.'
     ,'chamber-pop'
-    ,'jazz'
     ,'ambient'
     ,'synthwave'
     ,'country'
     ,'downtempo'
     ,'americana'
-    ,'blues'
-    ,'folk'))
+    ,'folk',
+    'roots'))
 
 st_supabase = st.connection(
     name="supabase_connection", 
@@ -61,71 +57,69 @@ current_sql
 
 queried_data = rows.data
 
-if not queried_data.count == 0:
+if len(queried_data)>0:
     #title
     title = queried_data[0]["name"]
     #image 
     link = queried_data[0]["link"]
     #image 
     image = queried_data[0]["pix"]
-else:
-    title="no matches found."
-    link=""
-    image=""
+    if queried_data[0]["name"]:
+      name1 =  queried_data[0]["name"][:18]      
+    if 1<len(queried_data):
+      name2 =  queried_data[1]["name"][:18]
+    else:
+      name2 = "no match"
+    if 2<len(queried_data):
+      name3 =  queried_data[2]["name"][:18]
+    else:
+      name3 = "no match"
+    if 3<len(queried_data):
+      name4 =  queried_data[3]["name"][:18]
+    else:
+      name4 = "no match"
 
-if queried_data[0]["name"]:
-  name1 =  queried_data[0]["name"][:18]
+    tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
 
-if queried_data[1]["name"]:
-  name2 =  queried_data[1]["name"][:18]
+    if name1:
+      with tab1:
+        st.header(queried_data[0]["name"])
+        subcola1, subcola2 = tab1.columns(2)
+        subcola1.image(queried_data[0]["pix"], width=200)
+        if ".mp3" in queried_data[0]["link"]:
+          subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcola2.video(queried_data[0]["link"])
+    else:
+        with tab1:
+          st.header("no matches")
 
-if queried_data[2]["name"]:
-  name3 =  queried_data[2]["name"][:18]
+    if "no match" not in name2:
+      with tab2:
+        st.header(queried_data[1]["name"])
+        subcolb1, subcolb2 = tab2.columns(2)
+        subcolb1.image(queried_data[1]["pix"], width=200)
+        if ".mp3" in queried_data[1]["link"]:
+          subcolb2.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcolb2.video(queried_data[1]["link"])
 
-if queried_data[3]["name"]:
-  name4 =  queried_data[3]["name"][:18]
+    if "no match" not in name3:
+      with tab3:
+        st.header(queried_data[2]["name"])
+        subcolc1, subcolc2 = tab3.columns(2)
+        subcolc1.image(queried_data[2]["pix"], width=200)
+        if ".mp3" in queried_data[2]["link"]:
+          subcolc2.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcolc2.video(queried_data[2]["link"])
 
-tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
-
-if name1:
-  with tab1:
-   st.header(queried_data[0]["name"])
-   subcola1, subcola2 = tab1.columns(2)
-   subcola1.image(queried_data[0]["pix"], width=200)
-   if ".mp3" in queried_data[0]["link"]:
-    subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
-   else:
-    subcola2.video(queried_data[0]["link"])
-else:
-  with tab1:
-    st.header("no matches")
-
-if name2:
-  with tab2:
-   st.header(queried_data[1]["name"])
-   subcolb1, subcolb2 = tab2.columns(2)
-   subcolb1.image(queried_data[1]["pix"], width=200)
-   if ".mp3" in queried_data[1]["link"]:
-    subcolb2.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
-   else:
-    subcolb2.video(queried_data[1]["link"])
-
-if name3:
-  with tab3:
-   st.header(queried_data[2]["name"])
-   subcolc1, subcolc2 = tab3.columns(2)
-   subcolc1.image(queried_data[2]["pix"], width=200)
-   if ".mp3" in queried_data[2]["link"]:
-    subcolc2.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
-   else:
-    subcolc2.video(queried_data[2]["link"])
-
-if name4:
-  with tab4:
-   st.header(queried_data[3]["name"])
-   subcold1, subcold2 = tab4.columns(2)
-   subcold1.image(queried_data[3]["pix"], width=200)
-   if ".mp3" in queried_data[3]["link"]:
-    subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
-   else:
-    subcold2.video(queried_data[3]["link"])
+    if "no match" not in name4:
+      with tab4:
+        st.header(queried_data[3]["name"])
+        subcold1, subcold2 = tab4.columns(2)
+        subcold1.image(queried_data[3]["pix"], width=200)
+        if ".mp3" in queried_data[3]["link"]:
+          subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcold2.video(queried_data[3]["link"])

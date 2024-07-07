@@ -1,9 +1,6 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
-from snowflake.snowpark.session import Session
-import snowflake.connector as snowconnect
-conn = st.connection("snowflake")
+from st_supabase_connection import SupabaseConnection
 
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
@@ -51,8 +48,30 @@ current_sql += " order by RANDOM();"
 #conn = st.connection("snowflake")
 
 #session = get_active_session()
-session =  Session.builder.create()
-queried_data = session.sql(current_sql).to_pandas()
+#session =  Session.builder.create()
+
+# Initialize connection.
+#conn = st.connection("supabase",type=SupabaseConnection)
+
+st_supabase = st.connection(
+    name="supabase_connection", 
+    type=SupabaseConnection, 
+    ttl=None,
+    url="https://fzfqjpxfdhlhtcryhwob.supabase.co", 
+    key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZnFqcHhmZGhsaHRjcnlod29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzMjUyNzEsImV4cCI6MjAzNTkwMTI3MX0.lYpuZUz7UA9D8RNIGOf2gnTVRJ7Szad1tzVw06sV6dk", 
+)
+
+# Perform query.
+#rows = conn.query("*", table="mytable", ttl="10m").execute()
+rows = st_supabase.query(current_sql, ttl="10m")
+#execute_query()
+
+#execute_query(st_supabase.table("countries").select("*", count="None").eq("continent","Asia").order("name",desc=True).limit(5), ttl=None)
+
+
+
+#queried_data = session.sql(current_sql).to_pandas()
+queried_data = rows.to_pandas()
 
 #df = conn.query(current_sql, ttl=600)
 # # # Execute the query and convert it into a Pandas dataframe

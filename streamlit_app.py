@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark.session import Session
 import snowflake.connector as snowconnect
 
 # Write directly to the app
@@ -46,11 +47,15 @@ if ques_genre_second and len(ques_genre_second)>1:
 current_sql += " order by RANDOM();"
 
 #created_dataframe = conn.sql(current_sql)
-conn = st.connection("snowflake")
+#conn = st.connection("snowflake")
 
-df = conn.query(current_sql, ttl=600)
+#session = get_active_session()
+session =  Session.builder.create()
+queried_data = session.sql(current_sql).to_pandas()
+
+#df = conn.query(current_sql, ttl=600)
 # # # Execute the query and convert it into a Pandas dataframe
-queried_data = df.to_pandas()
+#queried_data = df.to_pandas()
 
 if not queried_data.shape[0] == 0:
     #title

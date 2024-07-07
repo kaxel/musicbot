@@ -47,12 +47,17 @@ st_supabase = st.connection(
     url="https://fzfqjpxfdhlhtcryhwob.supabase.co", 
     key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZnFqcHhmZGhsaHRjcnlod29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzMjUyNzEsImV4cCI6MjAzNTkwMTI3MX0.lYpuZUz7UA9D8RNIGOf2gnTVRJ7Szad1tzVw06sV6dk", 
 )
-
+# use current_sql to keep track
+current_sql = "testing"
 # Perform query.
 if len(ques_genre_second)>1:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
+  current_sql = f"search {ques_genre_second}"
 else:
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)  
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
+  current_sql = f"search {ques_genre_main}"
+
+current_sql
 
 queried_data = rows.data
 
@@ -110,3 +115,5 @@ with tab4:
     subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
    else:
     subcold2.video(queried_data[3]["link"])
+
+col2.write(current_sql)

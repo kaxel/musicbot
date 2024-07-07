@@ -40,11 +40,6 @@ ques_genre_second = col2.radio(
     ,'blues'
     ,'folk'))
 
-current_sql = '"' + ques_genre_main + '">0'
-
-if ques_genre_second and len(ques_genre_second)>1:
-    current_sql += " AND CHARINDEX('" + ques_genre_second + "', SONGS." + '"tags")>0 '
-
 st_supabase = st.connection(
     name="supabase_connection", 
     type=SupabaseConnection, 
@@ -54,7 +49,10 @@ st_supabase = st.connection(
 )
 
 # Perform query.
-rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
+if len(ques_genre_second)>1:
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
+else:
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)  
 
 queried_data = rows.data
 
@@ -112,5 +110,3 @@ with tab4:
     subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
    else:
     subcold2.video(queried_data[3]["link"])
-
-#col2.write(current_sql)

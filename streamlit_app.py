@@ -50,7 +50,11 @@ st_supabase = st.connection(
 current_sql = "testing"
 # Perform query.
 if len(ques_genre_second)>1:
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).like("tags", ques_genre_second).order("track",desc=True).limit(5), ttl=None)
+  #use filter -- .filter('id', 'in', '(5,6,7)')  // Use `()` for `in` filter
+  #rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", [ques_genre_main, ques_genre_second]).order("track",desc=True).limit(5), ttl=None)
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_second)) #.filter('tags', 'like', ques_genre_second))
+
+  #rows = execute_query(st_supabase.table("songs").select("*", count="None").filter('tags', 'cs', '{"soul","country"}'))
   current_sql = f"search {ques_genre_second} & {ques_genre_main}"
 else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)

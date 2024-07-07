@@ -6,10 +6,10 @@ import random
 #print(random.randint(3, 9))
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
+
 # "with" notation
 with st.sidebar:
-    st.caption("List")
-    #st.[element_name]
+    st.title("Stats")
 
 # Get the current credentials
 col1, col2 = st.columns(2)
@@ -68,17 +68,32 @@ else:
     title="no matches found."
     link=""
     image=""
-st.subheader(title)
-if len(image)>2:
-    st.image(image)
-col1.button("REFRESH")
-col2.write(current_sql)
 
-if ".mp3" in queried_data[0]["link"]:
+
+tab1, tab2, tab3 = st.tabs(["A1", "B2", "C3"])
+
+with tab1:
+   st.header(queried_data[0]["name"])
+   st.image(queried_data[0]["pix"], width=200)
+   if ".mp3" in queried_data[0]["link"]:
     st.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
-else:
+   else:
     st.video(queried_data[0]["link"])
 
+with tab2:
+   st.header(queried_data[1]["name"])
+   st.image(queried_data[1]["pix"], width=200)
+   if ".mp3" in queried_data[0]["link"]:
+    st.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
+   else:
+    st.video(queried_data[1]["link"])
 
-md_link = '[listen](' + link + ')'
-col1.markdown(md_link, unsafe_allow_html=True)
+with tab3:
+   st.header(queried_data[2]["name"])
+   st.image(queried_data[2]["pix"], width=200)
+   if ".mp3" in queried_data[2]["link"]:
+    st.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
+   else:
+    st.video(queried_data[2]["link"])
+
+col2.write(current_sql)

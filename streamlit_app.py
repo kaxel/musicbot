@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
-from st_supabase_connection import SupabaseConnection
+#from st_supabase_connection import SupabaseConnection
+from st_supabase_connection import SupabaseConnection, execute_query
 
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")

@@ -8,7 +8,10 @@ st.title("🤖 Musicbot 🖥️")
 # "with" notation
 with st.sidebar:
     st.title("Info")
-    st.text("Select your genre and choose a tab below.")
+    st.text("Select your genre.")
+    st.text(" and choose a tab below.")
+    st.text("RSS entries are pulled from")
+    st.text("CHILLFILTR.com for now.")
 
 # Get the current credentials
 col1, col2 = st.columns(2)

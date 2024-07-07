@@ -69,31 +69,47 @@ else:
     link=""
     image=""
 
+name1 =  queried_data[0]["name"][:18]
+name2 =  queried_data[1]["name"][:18]
+name3 =  queried_data[2]["name"][:18]
+name4 =  queried_data[3]["name"][:18]
 
-tab1, tab2, tab3 = st.tabs(["A1", "B2", "C3"])
+tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
 
 with tab1:
    st.header(queried_data[0]["name"])
-   st.image(queried_data[0]["pix"], width=200)
+   subcola1, subcola2 = tab1.columns(2)
+   subcola1.image(queried_data[0]["pix"], width=200)
    if ".mp3" in queried_data[0]["link"]:
-    st.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
+    subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
    else:
-    st.video(queried_data[0]["link"])
+    subcola2.video(queried_data[0]["link"])
 
 with tab2:
    st.header(queried_data[1]["name"])
-   st.image(queried_data[1]["pix"], width=200)
-   if ".mp3" in queried_data[0]["link"]:
-    st.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
+   subcolb1, subcolb2 = tab2.columns(2)
+   subcolb1.image(queried_data[1]["pix"], width=200)
+   if ".mp3" in queried_data[1]["link"]:
+    subcolb2.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
    else:
-    st.video(queried_data[1]["link"])
+    subcolb2.video(queried_data[1]["link"])
 
 with tab3:
    st.header(queried_data[2]["name"])
-   st.image(queried_data[2]["pix"], width=200)
+   subcolc1, subcolc2 = tab3.columns(2)
+   subcolc1.image(queried_data[2]["pix"], width=200)
    if ".mp3" in queried_data[2]["link"]:
-    st.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
+    subcolc2.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
    else:
-    st.video(queried_data[2]["link"])
+    subcolc2.video(queried_data[2]["link"])
 
-col2.write(current_sql)
+with tab4:
+   st.header(queried_data[3]["name"])
+   subcold1, subcold2 = tab4.columns(2)
+   subcold1.image(queried_data[3]["pix"], width=200)
+   if ".mp3" in queried_data[3]["link"]:
+    subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
+   else:
+    subcold2.video(queried_data[3]["link"])
+
+#col2.write(current_sql)

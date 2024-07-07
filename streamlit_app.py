@@ -63,7 +63,8 @@ st_supabase = st.connection(
 
 # Perform query.
 #rows = conn.query("*", table="mytable", ttl="10m").execute()
-rows = st_supabase.query(current_sql, ttl="10m")
+# rows = st_supabase. query(current_sql, ttl="10m")
+rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=None)
 #execute_query()
 
 #execute_query(st_supabase.table("countries").select("*", count="None").eq("continent","Asia").order("name",desc=True).limit(5), ttl=None)

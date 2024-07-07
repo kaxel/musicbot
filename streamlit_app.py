@@ -1,15 +1,16 @@
 # Import python packages
 import streamlit as st
-#from st_supabase_connection import SupabaseConnection
 from st_supabase_connection import SupabaseConnection, execute_query
+import random
 
+#print(random.randint(3, 9))
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
-st.write(
-    """Drill down and discover your favorite genres of music.
-    """
-)
-#conn = snowconnect.connection
+# "with" notation
+with st.sidebar:
+    st.caption("List")
+    #st.[element_name]
+
 # Get the current credentials
 col1, col2 = st.columns(2)
 #get main genre
@@ -43,17 +44,6 @@ current_sql = '"' + ques_genre_main + '">0'
 if ques_genre_second and len(ques_genre_second)>1:
     current_sql += " AND CHARINDEX('" + ques_genre_second + "', SONGS." + '"tags")>0 '
 
-current_sql += " order by RANDOM();"
-
-#created_dataframe = conn.sql(current_sql)
-#conn = st.connection("snowflake")
-
-#session = get_active_session()
-#session =  Session.builder.create()
-
-# Initialize connection.
-#conn = st.connection("supabase",type=SupabaseConnection)
-
 st_supabase = st.connection(
     name="supabase_connection", 
     type=SupabaseConnection, 
@@ -63,20 +53,9 @@ st_supabase = st.connection(
 )
 
 # Perform query.
-#rows = conn.query("*", table="mytable", ttl="10m").execute()
-# rows = st_supabase.query(current_sql, ttl="10m")
-#rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=None)
-#execute_query()
-
-rows = execute_query(st_supabase.table("songs").select("*", count="None").eq("tags", ques_genre_main).order("preview",desc=True).limit(1), ttl=None)
-
+rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
 
 queried_data = rows.data
-#queried_data = session.sql(current_sql).to_pandas()
-
-#df = conn.query(current_sql, ttl=600)
-# # # Execute the query and convert it into a Pandas dataframe
-#queried_data = df.to_pandas()
 
 if not queried_data.count == 0:
     #title
@@ -94,6 +73,12 @@ if len(image)>2:
     st.image(image)
 col1.button("REFRESH")
 col2.write(current_sql)
+
+if ".mp3" in queried_data[0]["link"]:
+    st.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
+else:
+    st.video(queried_data[0]["link"])
+
 
 md_link = '[listen](' + link + ')'
 col1.markdown(md_link, unsafe_allow_html=True)

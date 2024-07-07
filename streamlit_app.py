@@ -73,7 +73,7 @@ rows = execute_query(st_supabase.table("songs").select("*", count="None"), ttl=N
 
 
 #queried_data = session.sql(current_sql).to_pandas()
-queried_data = rows.to_pandas()
+queried_data = rows
 
 #df = conn.query(current_sql, ttl=600)
 # # # Execute the query and convert it into a Pandas dataframe

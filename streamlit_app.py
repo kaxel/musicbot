@@ -74,9 +74,15 @@ else:
     image=""
 
 name1 =  queried_data[0]["name"][:18]
-name2 =  queried_data[1]["name"][:18]
-name3 =  queried_data[2]["name"][:18]
-name4 =  queried_data[3]["name"][:18]
+
+if queried_data[1]["name"]:
+  name2 =  queried_data[1]["name"][:18]
+
+if queried_data[2]["name"]:
+  name3 =  queried_data[2]["name"][:18]
+
+if queried_data[3]["name"]:
+  name4 =  queried_data[3]["name"][:18]
 
 tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
 
@@ -89,7 +95,8 @@ with tab1:
    else:
     subcola2.video(queried_data[0]["link"])
 
-with tab2:
+if name2:
+  with tab2:
    st.header(queried_data[1]["name"])
    subcolb1, subcolb2 = tab2.columns(2)
    subcolb1.image(queried_data[1]["pix"], width=200)
@@ -98,7 +105,8 @@ with tab2:
    else:
     subcolb2.video(queried_data[1]["link"])
 
-with tab3:
+if name3:
+  with tab3:
    st.header(queried_data[2]["name"])
    subcolc1, subcolc2 = tab3.columns(2)
    subcolc1.image(queried_data[2]["pix"], width=200)
@@ -107,7 +115,8 @@ with tab3:
    else:
     subcolc2.video(queried_data[2]["link"])
 
-with tab4:
+if name4:
+  with tab4:
    st.header(queried_data[3]["name"])
    subcold1, subcold2 = tab4.columns(2)
    subcold1.image(queried_data[3]["pix"], width=200)

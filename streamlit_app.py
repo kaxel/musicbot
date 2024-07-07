@@ -1,5 +1,6 @@
 # Import python packages
 import streamlit as st
+import snowflake.connector as snowconnect
 
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
@@ -7,7 +8,7 @@ st.write(
     """Drill down and discover your favorite genres of music.
     """
 )
-conn = st.connection("snowflake")
+conn = snowconnect.connection
 # Get the current credentials
 col1, col2 = st.columns(2)
 #get main genre
@@ -43,7 +44,9 @@ if ques_genre_second and len(ques_genre_second)>1:
 
 current_sql += " order by RANDOM();"
 
-#created_dataframe = session.sql(current_sql)
+#created_dataframe = conn.sql(current_sql)
+conn = st.connection("snowflake")
+
 df = conn.query(current_sql, ttl=600)
 # # # Execute the query and convert it into a Pandas dataframe
 queried_data = df.to_pandas()

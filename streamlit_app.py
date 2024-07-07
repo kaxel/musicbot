@@ -3,6 +3,7 @@ import streamlit as st
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.session import Session
 import snowflake.connector as snowconnect
+conn = st.connection("snowflake")
 
 # Write directly to the app
 st.title("🤖 Musicbot 🖥️")
@@ -10,7 +11,7 @@ st.write(
     """Drill down and discover your favorite genres of music.
     """
 )
-conn = snowconnect.connection
+#conn = snowconnect.connection
 # Get the current credentials
 col1, col2 = st.columns(2)
 #get main genre

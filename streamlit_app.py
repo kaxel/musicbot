@@ -57,8 +57,6 @@ else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
-current_sql
-
 queried_data = rows.data
 
 if not queried_data.count == 0:

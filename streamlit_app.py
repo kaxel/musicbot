@@ -19,7 +19,7 @@ ques_genre_main = col1.radio(
     "Choose your top genre.",
     ('rock',
     'pop',
-    'folk-pop',
+    'folk',
     'soul',
     'electronic',
     'dance',

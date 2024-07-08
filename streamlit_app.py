@@ -58,12 +58,12 @@ if len(ques_genre_second)>1:
   and_tags = f"and(tags.like.%{ques_genre_main}%,tags.like.%{ques_genre_second}%)"
   #secondary is selected
   secondary_selection = f"%{ques_genre_second}%"
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(6), ttl=None)
   current_sql = f"search {ques_genre_second} in {ques_genre_main}"
 else:
   and_tags = f"and(tags.like.%{ques_genre_main}%)"
   #rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", [ques_genre_main, ques_genre_second]).order("track",desc=True).limit(5), ttl=None)
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(6), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
 #and_tags
@@ -82,21 +82,25 @@ if len(queried_data)>0:
     if 1<len(queried_data):
       name2 =  queried_data[1]["name"][:18]
     else:
-      name2 = "no match"
+      name2 = "--"
     if 2<len(queried_data):
       name3 =  queried_data[2]["name"][:18]
     else:
-      name3 = "no match"
+      name3 = "--"
     if 3<len(queried_data):
       name4 =  queried_data[3]["name"][:18]
     else:
-      name4 = "no match"
+      name4 = "--"
     if 4<len(queried_data):
       name5 =  queried_data[4]["name"][:18]
     else:
-      name5 = "no match"
+      name5 = "--"
+    if 5<len(queried_data):
+      name6 =  queried_data[5]["name"][:18]
+    else:
+      name6 = "--"
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([name1, name2, name3, name4, name5])
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([name1, name2, name3, name4, name5, name6])
 
     if name1:
       with tab1:
@@ -111,7 +115,7 @@ if len(queried_data)>0:
         with tab1:
           st.header("no matches")
 
-    if "no match" not in name2:
+    if "--" not in name2:
       with tab2:
         st.header(queried_data[1]["name"])
         subcolb1, subcolb2 = tab2.columns(2)
@@ -121,7 +125,7 @@ if len(queried_data)>0:
         else:
           subcolb2.video(queried_data[1]["link"])
 
-    if "no match" not in name3:
+    if "--" not in name3:
       with tab3:
         st.header(queried_data[2]["name"])
         subcolc1, subcolc2 = tab3.columns(2)
@@ -131,7 +135,7 @@ if len(queried_data)>0:
         else:
           subcolc2.video(queried_data[2]["link"])
 
-    if "no match" not in name4:
+    if "--" not in name4:
       with tab4:
         st.header(queried_data[3]["name"])
         subcold1, subcold2 = tab4.columns(2)
@@ -141,7 +145,7 @@ if len(queried_data)>0:
         else:
           subcold2.video(queried_data[3]["link"])
     
-    if "no match" not in name5:
+    if "--" not in name5:
       with tab5:
         st.header(queried_data[4]["name"])
         subcole1, subcole2 = tab5.columns(2)
@@ -150,3 +154,13 @@ if len(queried_data)>0:
           subcole2.audio(queried_data[4]["link"], format="audio/mpeg", loop=False)
         else:
           subcole2.video(queried_data[4]["link"])
+
+    if "--" not in name6:
+      with tab6:
+        st.header(queried_data[5]["name"])
+        subcolf1, subcolf2 = tab6.columns(2)
+        subcolf1.image(queried_data[5]["pix"], width=260)
+        if ".mp3" in queried_data[5]["link"]:
+          subcolf2.audio(queried_data[5]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcolf2.video(queried_data[5]["link"])

@@ -67,7 +67,6 @@ if len(ques_genre_second)>1:
   current_sql = f"search {ques_genre_second} in {ques_genre_main}"
 else:
   and_tags = f"and(tags.like.%{ques_genre_main}%)"
-  #rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", [ques_genre_main, ques_genre_second]).order("track",desc=True).limit(5), ttl=None)
   rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(6), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
@@ -112,8 +111,11 @@ if len(queried_data)>0:
         st.header(queried_data[0]["name"])
         subcola1, subcola2 = tab1.columns(2)
         subcola1.image(queried_data[0]["pix"], width=260)
-        if ".mp3" in queried_data[0]["link"]:
-          subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
+        my_link = queried_data[0]["link"]
+        if ".mp3" in my_link:
+          with subcola2:
+            st.html("<audio id='el_1'  controlsList='nodownload' controls> <source src={my_link} type='audio/mpeg' /></audio>")
+          #subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
         else:
           subcola2.video(queried_data[0]["link"])
     else:

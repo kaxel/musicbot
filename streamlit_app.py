@@ -10,8 +10,13 @@ with st.sidebar:
     st.title("Info")
     st.text("Select your genre.")
     st.text(" and choose a tab below.")
+    st.text(" ")
     st.text("RSS entries are pulled from")
     st.text("CHILLFILTR.com for now.")
+    st.text(" ")
+    st.text("This is a proof of concept.")
+    st.text("We may add more sources")
+    st.text("in the future.")
 #setup the space
 col1, col2 = st.columns(2)
 #get main genre

@@ -114,7 +114,7 @@ if len(queried_data)>0:
         my_link = queried_data[0]["link"]
         if ".mp3" in my_link:
           with subcola2:
-            st.html("<audio id='el_1'  controlsList='nodownload' controls> <source src={my_link} type='audio/mpeg' /></audio>")
+            st.html(f"<audio controls controlsList='nodownload' src={my_link} type='audio/mpeg' /></audio>")
           #subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
         else:
           subcola2.video(queried_data[0]["link"])

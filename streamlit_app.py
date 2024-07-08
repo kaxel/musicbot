@@ -20,24 +20,24 @@ ques_genre_main = col1.radio(
     "Choose your top genre.",
     ('indie-rock',
     'indie-pop',
-    'folk-pop',
-    'americana',
+    'indie-folk',
     'soul',
     'electronic',
-    'hip-hop',
     'dance',
     'instrumental'))
 ques_genre_second = col2.radio(
     "Secondary genre.",
     ('.'
+    ,'indie'
+    ,'roots'
     ,'chamber-pop'
+    ,'americana'
+    ,'country'
+    ,'hip-hop'
     ,'ambient'
     ,'synthwave'
-    ,'country'
     ,'downtempo'
-    ,'americana'
-    ,'folk',
-    'roots'))
+    ))
 
 st_supabase = st.connection(
     name="supabase_connection", 
@@ -46,18 +46,19 @@ st_supabase = st.connection(
     url="https://fzfqjpxfdhlhtcryhwob.supabase.co", 
     key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZnFqcHhmZGhsaHRjcnlod29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzMjUyNzEsImV4cCI6MjAzNTkwMTI3MX0.lYpuZUz7UA9D8RNIGOf2gnTVRJ7Szad1tzVw06sV6dk", 
 )
-# use current_sql to keep track
+
 current_sql = "testing"
 # Perform query.
 if len(ques_genre_second)>1:
-  #use filter -- .filter('id', 'in', '(5,6,7)')  // Use `()` for `in` filter
-  #rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", [ques_genre_main, ques_genre_second]).order("track",desc=True).limit(5), ttl=None)
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_second)) #.filter('tags', 'like', ques_genre_second))
-
-  #rows = execute_query(st_supabase.table("songs").select("*", count="None").filter('tags', 'cs', {"soul","country"}))
-  current_sql = f"search {ques_genre_second}"
+  and_tags = f"and(tags.like.%{ques_genre_main}%,tags.like.%{ques_genre_second}%)"
+  #secondary is selected
+  secondary_selection = f"%{ques_genre_second}%"
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
+  current_sql = f"search {ques_genre_second} in {ques_genre_main}"
 else:
-  rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", ques_genre_main).order("track",desc=True).limit(5), ttl=None)
+  and_tags = f"and(tags.like.%{ques_genre_main}%)"
+  #rows = execute_query(st_supabase.table("songs").select("*", count="None").like("tags", [ques_genre_main, ques_genre_second]).order("track",desc=True).limit(5), ttl=None)
+  rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
 current_sql
@@ -65,7 +66,7 @@ current_sql
 queried_data = rows.data
 
 if len(queried_data)>0:
-    #title√
+    #title
     title = queried_data[0]["name"]
     #image 
     link = queried_data[0]["link"]

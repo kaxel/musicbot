@@ -8,7 +8,7 @@ st.title("🤖 Musicbot 🖥️")
 # "with" notation
 with st.sidebar:
     st.title("Discover New Music")
-    st.text("Select your genre.")
+    st.text("Select your genre")
     st.text(" and choose a tab below.")
     st.text(" ")
     st.text("RSS entries are pulled from")

@@ -53,8 +53,8 @@ st_supabase = st.connection(
     name="supabase_connection", 
     type=SupabaseConnection, 
     ttl=None,
-    url="https://fzfqjpxfdhlhtcryhwob.supabase.co", 
-    key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZnFqcHhmZGhsaHRjcnlod29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjAzMjUyNzEsImV4cCI6MjAzNTkwMTI3MX0.lYpuZUz7UA9D8RNIGOf2gnTVRJ7Szad1tzVw06sV6dk", 
+    url=st.secrets["SUPABASE_URL"], 
+    key=st.secrets["SUPABASE_KEY"], 
 )
 
 current_sql = "testing"

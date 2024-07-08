@@ -100,7 +100,7 @@ if len(queried_data)>0:
       with tab1:
         st.header(queried_data[0]["name"])
         subcola1, subcola2 = tab1.columns(2)
-        subcola1.image(queried_data[0]["pix"], width=200)
+        subcola1.image(queried_data[0]["pix"], width=260)
         if ".mp3" in queried_data[0]["link"]:
           subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
         else:
@@ -113,7 +113,7 @@ if len(queried_data)>0:
       with tab2:
         st.header(queried_data[1]["name"])
         subcolb1, subcolb2 = tab2.columns(2)
-        subcolb1.image(queried_data[1]["pix"], width=200)
+        subcolb1.image(queried_data[1]["pix"], width=260)
         if ".mp3" in queried_data[1]["link"]:
           subcolb2.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
         else:
@@ -123,7 +123,7 @@ if len(queried_data)>0:
       with tab3:
         st.header(queried_data[2]["name"])
         subcolc1, subcolc2 = tab3.columns(2)
-        subcolc1.image(queried_data[2]["pix"], width=200)
+        subcolc1.image(queried_data[2]["pix"], width=260)
         if ".mp3" in queried_data[2]["link"]:
           subcolc2.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
         else:
@@ -133,7 +133,7 @@ if len(queried_data)>0:
       with tab4:
         st.header(queried_data[3]["name"])
         subcold1, subcold2 = tab4.columns(2)
-        subcold1.image(queried_data[3]["pix"], width=200)
+        subcold1.image(queried_data[3]["pix"], width=260)
         if ".mp3" in queried_data[3]["link"]:
           subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
         else:
@@ -142,9 +142,9 @@ if len(queried_data)>0:
     if "no match" not in name5:
       with tab5:
         st.header(queried_data[4]["name"])
-        subcold1, subcold2 = tab4.columns(2)
-        subcold1.image(queried_data[4]["pix"], width=200)
+        subcole1, subcole2 = tab5.columns(2)
+        subcole1.image(queried_data[4]["pix"], width=260)
         if ".mp3" in queried_data[4]["link"]:
-          subcold2.audio(queried_data[4]["link"], format="audio/mpeg", loop=False)
+          subcole2.audio(queried_data[4]["link"], format="audio/mpeg", loop=False)
         else:
-          subcold2.video(queried_data[4]["link"])
+          subcole2.video(queried_data[4]["link"])

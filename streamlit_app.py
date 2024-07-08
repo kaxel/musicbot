@@ -12,7 +12,7 @@ with st.sidebar:
     st.text(" and choose a tab below.")
     st.text(" ")
     st.text("RSS entries are pulled from")
-    st.text("CHILLFILTR.com for now.")
+    st.text("CHILLFILTR.com.")
     st.text(" ")
     st.text("This is a proof of concept.")
     st.text("We may add more sources")

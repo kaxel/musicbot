@@ -12,26 +12,26 @@ with st.sidebar:
     st.text(" and choose a tab below.")
     st.text("RSS entries are pulled from")
     st.text("CHILLFILTR.com for now.")
-
-# Get the current credentials
+#setup the space
 col1, col2 = st.columns(2)
 #get main genre
 ques_genre_main = col1.radio(
     "Choose your top genre.",
-    ('indie-rock',
-    'indie-pop',
-    'indie-folk',
+    ('rock',
+    'pop',
+    'folk-pop',
     'soul',
     'electronic',
     'dance',
     'instrumental'))
+#get secondary genre
 ques_genre_second = col2.radio(
     "Secondary genre.",
     ('.'
     ,'indie'
     ,'roots'
     ,'commercial'
-    ,'nettwerk'
+    ,'post-punk'
     ,'chamber-pop'
     ,'americana'
     ,'country'
@@ -39,6 +39,7 @@ ques_genre_second = col2.radio(
     ,'ambient'
     ,'synthwave'
     ,'downtempo'
+    ,'nettwerk'
     ))
 
 st_supabase = st.connection(
@@ -88,8 +89,12 @@ if len(queried_data)>0:
       name4 =  queried_data[3]["name"][:18]
     else:
       name4 = "no match"
+    if 4<len(queried_data):
+      name5 =  queried_data[4]["name"][:18]
+    else:
+      name5 = "no match"
 
-    tab1, tab2, tab3, tab4 = st.tabs([name1, name2, name3, name4])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([name1, name2, name3, name4, name5])
 
     if name1:
       with tab1:
@@ -133,3 +138,13 @@ if len(queried_data)>0:
           subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
         else:
           subcold2.video(queried_data[3]["link"])
+    
+    if "no match" not in name5:
+      with tab5:
+        st.header(queried_data[4]["name"])
+        subcold1, subcold2 = tab4.columns(2)
+        subcold1.image(queried_data[4]["pix"], width=200)
+        if ".mp3" in queried_data[4]["link"]:
+          subcold2.audio(queried_data[4]["link"], format="audio/mpeg", loop=False)
+        else:
+          subcold2.video(queried_data[4]["link"])

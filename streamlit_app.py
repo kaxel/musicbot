@@ -30,6 +30,8 @@ ques_genre_second = col2.radio(
     ('.'
     ,'indie'
     ,'roots'
+    ,'commercial'
+    ,'nettwerk'
     ,'chamber-pop'
     ,'americana'
     ,'country'
@@ -61,7 +63,7 @@ else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
-current_sql
+and_tags
 
 queried_data = rows.data
 

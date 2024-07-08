@@ -115,9 +115,8 @@ if len(queried_data)>0:
         if ".mp3" in my_link:
           with subcola2:
             st.html(f"<audio controls controlsList='nodownload' src={my_link} type='audio/mpeg' /></audio>")
-          #subcola2.audio(queried_data[0]["link"], format="audio/mpeg", loop=False)
         else:
-          subcola2.video(queried_data[0]["link"])
+          subcola2.video(my_link)
     else:
         with tab1:
           st.header("no matches")
@@ -127,47 +126,57 @@ if len(queried_data)>0:
         st.header(queried_data[1]["name"])
         subcolb1, subcolb2 = tab2.columns(2)
         subcolb1.image(queried_data[1]["pix"], width=260)
-        if ".mp3" in queried_data[1]["link"]:
-          subcolb2.audio(queried_data[1]["link"], format="audio/mpeg", loop=False)
+        my_link1 = queried_data[1]["link"]
+        if ".mp3" in my_link1:
+          with subcolb2:
+            st.html(f"<audio controls controlsList='nodownload' src={my_link1} type='audio/mpeg' /></audio>")
         else:
-          subcolb2.video(queried_data[1]["link"])
+          subcolb2.video(my_link1)
 
     if "--" not in name3:
       with tab3:
         st.header(queried_data[2]["name"])
         subcolc1, subcolc2 = tab3.columns(2)
         subcolc1.image(queried_data[2]["pix"], width=260)
-        if ".mp3" in queried_data[2]["link"]:
-          subcolc2.audio(queried_data[2]["link"], format="audio/mpeg", loop=False)
+        my_link2 = queried_data[2]["link"]
+        if ".mp3" in my_link2:
+          with subcolc2:
+            st.html(f"<audio controls controlsList='nodownload' src={my_link2} type='audio/mpeg' /></audio>")
         else:
-          subcolc2.video(queried_data[2]["link"])
+          subcolc2.video(my_link2)
 
     if "--" not in name4:
       with tab4:
         st.header(queried_data[3]["name"])
         subcold1, subcold2 = tab4.columns(2)
         subcold1.image(queried_data[3]["pix"], width=260)
-        if ".mp3" in queried_data[3]["link"]:
-          subcold2.audio(queried_data[3]["link"], format="audio/mpeg", loop=False)
+        my_link3 = queried_data[3]["link"]
+        if ".mp3" in my_link3:
+          with subcold2:
+            st.html(f"<audio controls controlsList='nodownload' src={my_link3} type='audio/mpeg' /></audio>")
         else:
-          subcold2.video(queried_data[3]["link"])
+          subcold2.video(my_link3)
     
     if "--" not in name5:
       with tab5:
         st.header(queried_data[4]["name"])
         subcole1, subcole2 = tab5.columns(2)
         subcole1.image(queried_data[4]["pix"], width=260)
-        if ".mp3" in queried_data[4]["link"]:
-          subcole2.audio(queried_data[4]["link"], format="audio/mpeg", loop=False)
+        my_link4 = queried_data[4]["link"]
+        if ".mp3" in my_link4:
+          with subcole2:
+            st.html(f"<audio controls controlsList='nodownload' src={my_link4} type='audio/mpeg' /></audio>")
         else:
-          subcole2.video(queried_data[4]["link"])
+          subcole2.video(my_link4)
 
     if "--" not in name6:
       with tab6:
         st.header(queried_data[5]["name"])
         subcolf1, subcolf2 = tab6.columns(2)
         subcolf1.image(queried_data[5]["pix"], width=260)
-        if ".mp3" in queried_data[5]["link"]:
-          subcolf2.audio(queried_data[5]["link"], format="audio/mpeg", loop=False)
+        my_link5 = queried_data[5]["link"]
+        if ".mp3" in my_link5:
+          with subcolf2:
+            st.html(f"<audio controls controlsList='nodownload' src={my_link5} type='audio/mpeg' /></audio>")
         else:
-          subcolf2.video(queried_data[5]["link"])
+          subcolf2.video(my_link5)

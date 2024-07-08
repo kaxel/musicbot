@@ -17,26 +17,27 @@ col1, col2 = st.columns(2)
 #get main genre
 ques_genre_main = col1.radio(
     "Choose your top genre.",
-    ('rock',
-    'pop',
-    'folk',
-    'soul',
-    'electronic',
-    'dance',
-    'instrumental'))
+    ('rock'
+    ,'pop'
+    ,'folk'
+    ,'soul'
+    ,'roots'
+    ,'electronic'
+    ,'hip-hop'
+    ,'dance'
+    ,'instrumental'))
 #get secondary genre
 ques_genre_second = col2.radio(
     "Secondary genre.",
     ('.'
     ,'indie'
-    ,'roots'
     ,'commercial'
     ,'post-punk'
     ,'experimental'
     ,'chamber-pop'
+    ,'bedroom-pop'
     ,'americana'
     ,'country'
-    ,'hip-hop'
     ,'ambient'
     ,'synthwave'
     ,'downtempo'
@@ -65,7 +66,7 @@ else:
   rows = execute_query(st_supabase.table("songs").select("*", count="None").or_(and_tags).order("track",desc=True).limit(5), ttl=None)
   current_sql = f"search {ques_genre_main}"
 
-and_tags
+#and_tags
 
 queried_data = rows.data
 
